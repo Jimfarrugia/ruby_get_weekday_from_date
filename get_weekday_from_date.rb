@@ -92,7 +92,7 @@ def get_weekday_from_date date
   # Add the last two digits of the year
   weekday += year
   # Divide by 7 and take the remainder
-  weekday = weekday % 7
+  weekday %= 7
 
   # The value of 'weekday' should now be an integer from 1-7 which will correspond
   #     with a day of the week. (0 => Sat, 1 => Sun, ...6 => Thu, 7 => Fri)
