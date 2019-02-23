@@ -1,3 +1,11 @@
+=begin
+    To Do:
+    - Add checks for invalid input:
+        - less than 10 characters
+        - invalid Y/M/D values (eg. 0101 -1 99)
+        - regex pattern matching?
+=end
+
 # @method:  get_century_code
 # @desc:    match the given century to a value in the century_codes hash/table.
 # @inputs:  century : int : expects two digits
@@ -24,7 +32,7 @@ end
 
 # @method:  is_leap_year
 # @desc:    calculate whether the given year is a leap year or not
-# @inputs:  date : string : expects "YYYY MM DD"
+# @inputs:  date : string : expects first 4 characters to be the year
 # @output:  boolean
 def is_leap_year date
   year = date[0..3].to_i
@@ -39,12 +47,13 @@ def is_leap_year date
   end
 end
 
-#
+# @method:  get_weekday_from_date
+# @desc:    calculate what day of the week a given date lands on
+# @inputs:  date : string : expects 10 characters in the following format: "YYYY MM DD"
+# @output:  weekday : string
 def get_weekday_from_date date
-
   # Using 'The Key Value Method' for getting the weekday of any date (in the Gregorian calendar)
   # which I found at http://mathforum.org/dr.math/faq/faq.calendar.html
-
   weekday = nil
   century = date[0..1].to_i # first two digits of the year
   year    = date[2..3].to_i # last two digits of the year
@@ -72,14 +81,12 @@ def get_weekday_from_date date
   weekday += day
   # Add the month's key value
   weekday += month_values[month]
-
   # If the date is in January or February of a leap year, subtract 1.
   if month == 1 or month == 2
     if is_leap_year date
       weekday -= 1
     end
   end
-
   # Add the century code
   weekday += get_century_code century
   # Add the last two digits of the year
@@ -87,11 +94,10 @@ def get_weekday_from_date date
   # Divide by 7 and take the remainder
   weekday = weekday % 7
 
-  # The value of 'weekday' should now be an integer from 1-7 
-  #   which will correspond with a day of the week.
-  #   ( 0 => Sat, 1 => Sun, ...6 => Thu, 7 => Fri )
-  # I'll store the weekdays in an array such that the index of each value 
-  #   matches the corresponding value of 'weekday'.
+  # The value of 'weekday' should now be an integer from 1-7 which will correspond
+  #     with a day of the week. (0 => Sat, 1 => Sun, ...6 => Thu, 7 => Fri)
+  # Storing the weekdays in an array such that the index of each value 
+  #     matches the corresponding value of 'weekday'.
   weekdays = ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
   # Implicit return value (string)
@@ -100,17 +106,15 @@ def get_weekday_from_date date
 end
 
 # Ask the user for input
-puts "Please enter a date: (YYYY MM DD)(eg. 2019 12 25)"
+puts "Please enter a date: (YYYY MM DD)"
+puts "(eg. 2019 01 25)"
 
 # Retrieve user input
 date = gets.chomp
 
 # Output result to user
 weekday = get_weekday_from_date date
-puts "#{date} will be a #{weekday}."
-
-
-# THIS METHOD ASSUMES THE GIVEN 'DATE' ARGUMENT IS A STRING IN THE FOLLOWING FORMAT "YYYY MM DD"
+puts "#{date} lands on a #{weekday}."
 
 =begin
 A note about calculating leap years (from timeanddate.com/date/leapyear.html):
