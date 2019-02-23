@@ -24,7 +24,7 @@ end
 
 # @method:  is_leap_year
 # @desc:    calculate whether the given year is a leap year or not
-# @inputs:  date : string
+# @inputs:  date : string : expects "YYYY MM DD"
 # @output:  boolean
 def is_leap_year date
   year = date[0..3].to_i
@@ -72,8 +72,13 @@ def get_weekday_from_date date
   weekday += day
   # Add the month's key value
   weekday += month_values[month]
+
   # If the date is in January or February of a leap year, subtract 1.
-  
+  if month == 1 or month == 2
+    if is_leap_year date
+      weekday -= 1
+    end
+  end
 
   # Add the century code
   weekday += get_century_code century
@@ -109,8 +114,6 @@ puts "#{date} will be a #{weekday}."
 
 =begin
 A note about calculating leap years (from timeanddate.com/date/leapyear.html):
-
-  We add a Leap Day on February 29, almost every four years.
 
   In the Gregorian calendar three criteria must be taken into account to identify leap years:
 
