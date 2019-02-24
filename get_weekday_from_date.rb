@@ -4,6 +4,9 @@
         - less than 10 characters
         - invalid Y/M/D values (eg. 0101 -1 99)
         - regex pattern matching?
+    - Maybe use a DateTime object instead of a string.
+      DateTime has a built-in method called 'leap' for checking leap years.
+      Can we easily parse the string into a DateTime?
 =end
 
 # @method:  get_century_code
@@ -117,7 +120,8 @@ weekday = get_weekday_from_date date
 puts "#{date} lands on a #{weekday}."
 
 =begin
-A note about calculating leap years (from timeanddate.com/date/leapyear.html):
+
+  A note about calculating leap years:
 
   In the Gregorian calendar three criteria must be taken into account to identify leap years:
 
@@ -127,5 +131,7 @@ A note about calculating leap years (from timeanddate.com/date/leapyear.html):
   
   This means that in the Gregorian calendar, the years 2000 and 2400 are leap years, 
   while 1800, 1900, 2100, 2200, 2300 and 2500 are NOT leap years.
+
+  (source: timeanddate.com/date/leapyear.html)
 
 =end
